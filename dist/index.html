@@ -10,8 +10,7 @@
       crossorigin="anonymous"
     />
     <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
       crossorigin="anonymous"
     ></script>
     <script
@@ -41,15 +40,21 @@
     <script>
       $(() => {
         console.log("loaded");
-        $("#send").click(() =>
-          addMessage({ name: "anrag", message: "hi there" })
-        );
+        $("#send").click(() => {
+          addMessage({ name: "anrag", message: "hi there" });
+          getMessages();
+        });
         // addMessage({ name: "anrag", message: "hi there" });
       });
       function addMessage(message) {
         $("#messages").append(
           `<h4> ${message.name} </h4> <p> ${message.message}`
         );
+      }
+      function getMessages() {
+        $.get("http://localhost:8000/messages", data => {
+          console.log(data);
+        });
       }
     </script>
   </body>
