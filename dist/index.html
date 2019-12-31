@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -44,37 +45,6 @@
       </div>
       <div id="messages"></div>
     </div>
-    <script>
-      $(() => {
-        console.log("loaded");
-        getMessages();
-        $("#send").click(() => {
-          let message = {
-            name: $("#name").val(),
-            message: $("#message").val()
-          };
-          console.log(message);
-          postMessages(message);
-          getMessages();
-          //addMessage({ name: "anrag", message: "hi there" });
-        });
-        // addMessage({ name: "anrag", message: "hi there" });
-      });
-      function addMessage(message) {
-        $("#messages").append(
-          `<h4> ${message.name} </h4> <p> ${message.message}`
-        );
-      }
-      function getMessages() {
-        $.get("http://localhost:8000/messages", data => {
-          console.log(data);
-          data.forEach(addMessage);
-        });
-      }
-
-      function postMessages(message) {
-        $.post("http://localhost:8000/messages", message);
-      }
-    </script>
+    <script src="./app.bundle.js"></script>
   </body>
 </html>

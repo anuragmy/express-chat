@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
 const path = require("path");
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 
 app.use(express.static(path.resolve(__dirname, "dist")));
 app.use(bodyparser.json());
@@ -29,6 +31,7 @@ app.get("/messages", (req, res) => {
 app.post("/messages", (req, res) => {
   if (req.body.name && req.body.message) {
     messages.push(req.body);
+    io.emit("message", req.body);
     res.sendStatus(200);
   } else {
     res.send("invalid");
@@ -40,4 +43,7 @@ app.get("/clear", (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(8000, () => console.log("listening..."));
+io.on("connection", socket => {
+  console.log("a user connected");
+});
+http.listen(8000, () => console.log("listening..."));
